@@ -21,6 +21,9 @@ import com.prateek.settings.model.SettingsState
 fun Settings() {
 
     val viewModel: SettingsViewModel = viewModel()
+
+    //collectAsState will return Compose State from StateFlow , and will collect value of state whenever we update the stateflow in vm,
+    // causing it to change the value  of state so recomposition
     MaterialTheme() {
         val state = viewModel.uiState.collectAsState().value
         SettingsList(
