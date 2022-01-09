@@ -39,6 +39,20 @@ fun AuthenticationContent(
         if (authenticationState.isLoading) {
             CircularProgressIndicator()
         } else {
+            AuthenticationForm(
+                modifier = Modifier.fillMaxSize(),
+                authenticationMode = authenticationState.authenticationMode,
+                email = authenticationState.email, password = authenticationState.password,
+                onEmailChanged = {
+                    handleEvent(AuthenticationEvent.EmailChanged(it))
+                },
+                onPasswordChanged = {
+                    handleEvent(AuthenticationEvent.PasswordChanged(it))
+                },
+                onAuthenticate = {
+                    handleEvent(AuthenticationEvent.Authenticate)
+                }
+            )
 
         }
 
