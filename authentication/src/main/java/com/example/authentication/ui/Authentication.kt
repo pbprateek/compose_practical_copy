@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.authentication.AuthenticationViewModel
 import com.example.authentication.model.AuthenticationEvent
@@ -42,7 +43,10 @@ fun AuthenticationContent(
             AuthenticationForm(
                 modifier = Modifier.fillMaxSize(),
                 authenticationMode = authenticationState.authenticationMode,
-                email = authenticationState.email, password = authenticationState.password,
+                email = authenticationState.email,
+                password = authenticationState.password,
+                completedPasswordRequirements = authenticationState.passwordRequirements,
+                enableAuthentication = authenticationState.isFormValid(),
                 onEmailChanged = {
                     handleEvent(AuthenticationEvent.EmailChanged(it))
                 },
@@ -51,9 +55,19 @@ fun AuthenticationContent(
                 },
                 onAuthenticate = {
                     handleEvent(AuthenticationEvent.Authenticate)
+                },
+                onToggleMode = {
+                    handleEvent(AuthenticationEvent.ToggleAuthenticationMode)
                 }
             )
 
+            authenticationState.error?.let { error ->
+                AuthenticationErrorDialog(error = error, dismissError = {
+                    handleEvent(AuthenticationEvent.ErrorDismissed)
+                })
+
+
+            }
         }
 
     }

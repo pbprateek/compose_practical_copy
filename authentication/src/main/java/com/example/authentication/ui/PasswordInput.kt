@@ -27,7 +27,7 @@ fun PasswordInput(
     onDonePressed: () -> Unit
 ) {
     var isPasswordHidden by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
     TextField(

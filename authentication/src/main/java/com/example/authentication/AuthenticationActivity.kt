@@ -21,12 +21,3 @@ class AuthenticationActivity : ComponentActivity() {
         }
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PracticalComposeMyCopyTheme {
-
-    }
-}

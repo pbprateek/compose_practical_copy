@@ -9,6 +9,8 @@ data class AuthenticationState(
     val error: String? = null
 ) {
 
+
+    //TODO:Remove later , Only thing am not sure is if the change will actually cause the trigger
     fun isFormValid(): Boolean {
         //Basically if it is sign in , don't check for password requirements
         //Only check for sign up
