@@ -10,3 +10,4 @@ rootProject.name = "Practical Compose(My copy)"
 
 include ':settings'
 include ':authentication'
+include ':homescreen'
