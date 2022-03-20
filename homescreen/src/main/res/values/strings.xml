@@ -2,4 +2,6 @@
     <string name="app_name">homeScreen</string>
 
     <string name="cd_create_item">Create a new item</string>
+    <string name="cd_more_information">More Information</string>
+    <string name="not_avalible_yet">Not Avalible yet</string>
 </resources>

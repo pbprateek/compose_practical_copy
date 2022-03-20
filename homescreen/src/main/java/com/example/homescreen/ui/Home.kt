@@ -4,9 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,16 +14,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.runtime.getValue
 import com.example.homescreen.R
 import com.example.homescreen.model.Destination
 import com.example.homescreen.ui.theme.BottomNavigationBar
 import com.example.homescreen.ui.theme.PracticalComposeMyCopyTheme
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun Home(modifier: Modifier = Modifier) {
 
     val scaffoldState = rememberScaffoldState()
+    //Same coroutineScope will be returned across recomposition and scope will be cancelled once call leaves the composition
+    val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
     //returns topmost backstack entry every time it changes by calling navigate or popBackStack and will cause recomposition
     val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -43,6 +45,22 @@ fun Home(modifier: Modifier = Modifier) {
         topBar = {
             TopAppBar(title = {
                 Text(text = "Home")
+            }, actions = {
+                if (currentDestination != Destination.Feed) {
+                    val snackMessage = stringResource(id = R.string.not_avalible_yet)
+                    IconButton(onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(snackMessage)
+                        }
+
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Info, contentDescription = stringResource(
+                                id = R.string.cd_more_information
+                            )
+                        )
+                    }
+                }
             })
         },
         floatingActionButton = {
