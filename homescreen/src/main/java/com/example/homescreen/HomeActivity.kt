@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.homescreen.ui.Home
 import com.example.homescreen.ui.theme.PracticalComposeMyCopyTheme
@@ -23,7 +24,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Home(modifier = Modifier.fillMaxSize())
+                    Home(
+                        modifier = Modifier.fillMaxSize(),
+                        orientation = LocalConfiguration.current.orientation
+                    )
                 }
             }
         }

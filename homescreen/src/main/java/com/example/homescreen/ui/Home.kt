@@ -1,5 +1,6 @@
 package com.example.homescreen.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -19,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.homescreen.R
 import com.example.homescreen.model.Destination
+import com.example.homescreen.ui.theme.Body
 import com.example.homescreen.ui.theme.BottomNavigationBar
 import com.example.homescreen.ui.theme.PracticalComposeMyCopyTheme
 import kotlinx.coroutines.coroutineScope
@@ -26,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @Composable
-fun Home(modifier: Modifier = Modifier) {
+fun Home(modifier: Modifier = Modifier, orientation: Int) {
 
     // val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed) //Pass it in scaffoldState if u need some other default initial value
 
@@ -87,9 +89,9 @@ fun Home(modifier: Modifier = Modifier) {
             }
         },
         floatingActionButton = {
-            if (currentDestination.isRootDestination) {
+            if (currentDestination.isRootDestination && orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 FloatingActionButton(onClick = {
-
+                    navController.navigate(Destination.Creation.path)
                 }) {
                     //Content for fab
                     Icon(
@@ -100,7 +102,7 @@ fun Home(modifier: Modifier = Modifier) {
             }
         },
         bottomBar = {
-            if (currentDestination.isRootDestination) {
+            if (currentDestination.isRootDestination && orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 BottomNavigationBar(
                     currentDestination = currentDestination,
                     onNavigate = { destination ->
@@ -139,7 +141,12 @@ fun Home(modifier: Modifier = Modifier) {
             }
         }
     ) {
-        Navigation(modifier = modifier, navController = navController)
+        Body(
+            modifier = modifier,
+            navController = navController,
+            orientation = orientation,
+            destination = currentDestination
+        )
     }
 }
 
@@ -234,6 +241,6 @@ fun DrawerItem(
 @Composable
 fun DefaultPreview() {
     PracticalComposeMyCopyTheme {
-        Home()
+        Home(orientation = Configuration.ORIENTATION_PORTRAIT)
     }
 }

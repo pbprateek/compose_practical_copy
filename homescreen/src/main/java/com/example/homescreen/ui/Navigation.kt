@@ -35,6 +35,12 @@ fun Navigation(modifier: Modifier = Modifier, navController: NavHostController) 
             }
         }
 
+        navigation(startDestination = Destination.Add.path, route = Destination.Creation.path) {
+            composable(Destination.Add.path) {
+                ContentArea(destination = Destination.Add, modifier = Modifier.fillMaxSize())
+            }
+        }
+
 
         composable(Destination.Settings.path) {
             ContentArea(destination = Destination.Settings, modifier = Modifier.fillMaxSize())

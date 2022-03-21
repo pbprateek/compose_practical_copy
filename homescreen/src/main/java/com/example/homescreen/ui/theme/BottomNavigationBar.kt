@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.homescreen.model.Destination
+import com.example.homescreen.model.NavigationBarItem.Companion.buildNavigationItems
 
 @Composable
 fun BottomNavigationBar(
@@ -15,22 +16,12 @@ fun BottomNavigationBar(
     onNavigate: (destination: Destination) -> Unit
 ) {
     BottomNavigation(modifier = modifier) {
-
-        listOf(Destination.Feed, Destination.Contacts, Destination.Calendar).forEach {
+        buildNavigationItems(currentDestination, onNavigate).forEach {
             BottomNavigationItem(
-                selected = it.path == currentDestination.path, icon = {
-                    it.icon?.let { image ->
-                        Icon(
-                            imageVector = image,
-                            contentDescription = it.path
-                        )
-                    }
-                },
-                onClick = {
-                    onNavigate(it)
-                }, label = {
-                    Text(text = it.path)
-                }
+                selected = it.selected,
+                onClick = it.onClick,
+                icon = it.icon,
+                label = it.label
             )
         }
 
