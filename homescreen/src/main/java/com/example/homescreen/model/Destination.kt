@@ -1,9 +1,7 @@
 package com.example.homescreen.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Destination(
@@ -19,6 +17,10 @@ sealed class Destination(
 
     object Calendar : Destination("calender", Icons.Default.DateRange)
 
+    object Settings : Destination("settings", Icons.Default.Settings, isRootDestination = false)
+
+    object Upgrade : Destination("upgrade", Icons.Default.Star, isRootDestination = false)
+
     companion object {
 
         fun fromString(route: String): Destination {
@@ -26,6 +28,8 @@ sealed class Destination(
                 Feed.path -> Feed
                 Calendar.path -> Calendar
                 Contacts.path -> Contacts
+                Settings.path -> Settings
+                Upgrade.path -> Upgrade
                 else -> Home
             }
         }

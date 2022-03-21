@@ -16,20 +16,34 @@ fun Navigation(modifier: Modifier = Modifier, navController: NavHostController) 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Destination.Feed.path
+        startDestination = Destination.Home.path //Bcz we are nesting , it will look for this route and there Feed is the startDestination(like django)
     ) {
 
         //Use the builder to create the graph,composable is an extension function of NavGraphBuilder helps us add compose to the graph and pass parameters
 
-        //Default Start Destination
-        composable(Destination.Feed.path) {
-            ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Feed)
+        //The NavHost also supports nested navigation graphs, which allows us to group sets of related destinations together.Do this using navigation extension
+        navigation(startDestination = Destination.Feed.path, route = Destination.Home.path) {
+            //Default Start Destination
+            composable(Destination.Feed.path) {
+                ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Feed)
+            }
+            composable(Destination.Contacts.path) {
+                ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Contacts)
+            }
+            composable(Destination.Calendar.path) {
+                ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Calendar)
+            }
         }
-        composable(Destination.Contacts.path) {
-            ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Contacts)
+
+
+        composable(Destination.Settings.path) {
+            ContentArea(destination = Destination.Settings, modifier = Modifier.fillMaxSize())
         }
-        composable(Destination.Calendar.path) {
-            ContentArea(modifier = Modifier.fillMaxSize(), destination = Destination.Calendar)
+
+        composable(Destination.Upgrade.path) {
+            ContentArea(destination = Destination.Upgrade, modifier = Modifier.fillMaxSize())
         }
+
     }
 }
+
