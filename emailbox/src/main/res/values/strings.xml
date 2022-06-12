@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">emailbox</string>
+    <string name="app_name">Inbox</string>
+    <string name="inbox_emails">Inbox (%d)</string>
+
+    <string name="error_status">Whoops, there was a problem loading the content.</string>
+    <string name="label_try_again">Try again?</string>
+
+    <string name="empty_status">Nothing to show here yet.</string>
+    <string name="label_check_again">Check again?</string>
+    <string name="cd_delete_email">Delete Email</string>
 </resources>
