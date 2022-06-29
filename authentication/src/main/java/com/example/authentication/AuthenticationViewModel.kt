@@ -10,12 +10,15 @@ import com.example.authentication.model.PasswordRequirements
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AuthenticationViewModel : ViewModel() {
 
-    val uiState = MutableStateFlow(AuthenticationState())
+
+    private val _uiState = MutableStateFlow(AuthenticationState())
+    val uiState: StateFlow<AuthenticationState> = _uiState
 
     private fun toggleAuthenticationMode() {
         val authMode = uiState.value.authenticationMode
@@ -23,7 +26,7 @@ class AuthenticationViewModel : ViewModel() {
             if (authMode == AuthenticationMode.SIGN_IN) AuthenticationMode.SIGN_UP else AuthenticationMode.SIGN_IN
 
         //The copy function in Kotlin copies the existing class reference, replacing any values that have been provided as arguments to the function.
-        uiState.value = uiState.value.copy(authenticationMode = newAuthMode)
+        _uiState.value = uiState.value.copy(authenticationMode = newAuthMode)
     }
 
     fun handleEvent(authenticationEvent: AuthenticationEvent) {
@@ -47,20 +50,20 @@ class AuthenticationViewModel : ViewModel() {
     }
 
     private fun authenticate() {
-        uiState.value = uiState.value.copy(isLoading = true)
+        _uiState.value = uiState.value.copy(isLoading = true)
         //make network call
 
         viewModelScope.launch(Dispatchers.IO) {
             delay(2000L)
             withContext(Dispatchers.Main) {
-                uiState.value =
+                _uiState.value =
                     uiState.value.copy(isLoading = false, error = "Something went wrong")
             }
         }
     }
 
     private fun updateEmail(email: String) {
-        uiState.value = uiState.value.copy(email = email)
+        _uiState.value = uiState.value.copy(email = email)
     }
 
     private fun updatePassword(password: String) {
@@ -76,11 +79,11 @@ class AuthenticationViewModel : ViewModel() {
         if (password.any { it.isDigit() }) {
             requirements.add(PasswordRequirements.NUMBER)
         }
-        uiState.value = uiState.value.copy(password = password, passwordRequirements = requirements)
+        _uiState.value = uiState.value.copy(password = password, passwordRequirements = requirements)
     }
 
     private fun dismissError() {
-        uiState.value = uiState.value.copy(error = null)
+        _uiState.value = uiState.value.copy(error = null)
     }
 
 

@@ -10,12 +10,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.authentication.AuthenticationViewModel
 import com.example.authentication.model.AuthenticationEvent
 import com.example.authentication.model.AuthenticationState
 
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun Authentication() {
     MaterialTheme {
@@ -23,7 +26,7 @@ fun Authentication() {
 
         AuthenticationContent(
             modifier = Modifier.fillMaxSize(),
-            authenticationState = viewModel.uiState.collectAsState().value,
+            authenticationState = viewModel.uiState.collectAsStateWithLifecycle().value,
             handleEvent = viewModel::handleEvent
         )
     }
