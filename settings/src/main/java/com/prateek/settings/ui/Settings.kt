@@ -30,7 +30,6 @@ fun Settings() {
             state = state,
             modifier = Modifier.fillMaxSize(), viewModel = viewModel
         )
-
     }
 
 

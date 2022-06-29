@@ -27,6 +27,6 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     PracticalComposeMyCopyTheme {
-        Greeting("Android")
+        Settings()
     }
 }
