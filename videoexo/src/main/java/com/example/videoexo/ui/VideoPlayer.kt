@@ -38,25 +38,25 @@ fun VideoPlayer(
 ) {
 
     val context = LocalContext.current
-    val mediaItem =
-        remember { MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") }
 
-    val exoPlayer = ExoPlayer.Builder(context).build().apply {
-        setMediaItem(mediaItem)
-        addListener(object : Player.Listener {
-            override fun onPlaybackStateChanged(playbackState: Int) {
-                super.onPlaybackStateChanged(playbackState)
-                if (playbackState == Player.STATE_READY) {
-                    handleEvent(VideoEvents.VideoLoaded)
+    val exoPlayer = remember(key1 = videoState.videoUri) {
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(MediaItem.fromUri(videoState.videoUri))
+            addListener(object : Player.Listener {
+                override fun onPlaybackStateChanged(playbackState: Int) {
+                    super.onPlaybackStateChanged(playbackState)
+                    if (playbackState == Player.STATE_READY) {
+                        handleEvent(VideoEvents.VideoLoaded)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     Box(modifier = Modifier.background(Color.Black)) {
 
         var controlsVisible by remember {
-            mutableStateOf(false)
+            mutableStateOf(true)
         }
 
         val alphaAnimation by animateFloatAsState(

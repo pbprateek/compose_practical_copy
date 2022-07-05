@@ -26,6 +26,7 @@ fun Player(
 
     //the key is changed at any point, then the existing coroutine will be cancelled, with a new coroutine execution taking its place.
     // Using this side-effect we can prepare our ExoPlayer reference on initial composition and only as required
+    //Or we would have moved exoplayer to remember in previous call
     LaunchedEffect(key1 = exoPlayer, block = {
         exoPlayer.prepare()
     })
